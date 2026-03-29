@@ -1,0 +1,39 @@
+{
+  "cloud": true,
+  "pages": [
+    "pages/index/index",
+    "pages/publish/publish",
+    "pages/detail/detail",
+    "pages/my/my",
+    "pages/my-issues/my-issues"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#07C160",
+    "navigationBarTitleText": "小区物业监督助手",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#07C160",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/images/home.png",
+        "selectedIconPath": "assets/images/home-active.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "assets/images/my.png",
+        "selectedIconPath": "assets/images/my-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

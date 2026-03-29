@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "issue-card": "/components/issue-card/issue-card",
+    "empty-state": "/components/empty-state/empty-state"
+  },
+  "navigationBarTitleText": "物业问题监督",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

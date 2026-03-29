@@ -1,0 +1,55 @@
+/* pages/my-issues/my-issues.wxss */
+
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+
+.issue-list {
+  height: 100vh;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.issue-item {
+  position: relative;
+}
+
+.issue-actions {
+  position: absolute;
+  top: 24rpx;
+  right: 24rpx;
+  display: flex;
+  gap: 16rpx;
+  z-index: 10;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 20rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.action-btn image {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+.action-btn text {
+  font-size: 24rpx;
+}
+
+.delete-btn {
+  color: #E65400;
+}
+
+.loading-more {
+  text-align: center;
+  padding: 30rpx;
+  color: #999999;
+  font-size: 26rpx;
+}

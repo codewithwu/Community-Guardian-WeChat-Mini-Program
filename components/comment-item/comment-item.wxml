@@ -1,0 +1,13 @@
+<!-- components/comment-item/comment-item.wxml -->
+<view class="comment-item">
+  <view class="comment-header">
+    <image class="avatar" src="{{comment.avatarUrl || '/assets/images/default-avatar.png'}}" mode="aspectFill" />
+    <view class="user-info">
+      <text class="nickname">{{comment.nickName || '匿名用户'}}</text>
+      <text class="time">{{formatTime(comment.createTime)}}</text>
+    </view>
+  </view>
+  <view class="comment-content">
+    <text>{{comment.content}}</text>
+  </view>
+</view>

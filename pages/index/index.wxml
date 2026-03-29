@@ -1,0 +1,37 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <!-- 问题列表 -->
+  <scroll-view
+    scroll-y
+    class="issue-list"
+    enable-back-to-top
+    bindscrolltolower="onReachBottom"
+  >
+    <block wx:if="{{issues.length > 0}}">
+      <issue-card
+        wx:for="{{issues}}"
+        wx:key="_id"
+        issue="{{item}}"
+        bindtap="onIssueTap"
+        bind:like="onLikeTap"
+        bind:comment="onCommentTap"
+      />
+    </block>
+    <block wx:else>
+      <empty-state type="no-issues" text="还没有任何问题，快来发布第一个吧" />
+    </block>
+
+    <!-- 加载更多 -->
+    <view class="loading-more" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+    <view class="loading-more" wx:elif="{{!hasMore && issues.length > 0}}">
+      <text>没有更多了</text>
+    </view>
+  </scroll-view>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn" bindtap="onPublishTap">
+    <image src="/assets/images/add.png" class="publish-icon" />
+  </view>
+</view>

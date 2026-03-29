@@ -1,0 +1,190 @@
+<!-- pages/detail/detail.wxml -->
+<view class="container" wx:if="{{issue}}">
+  <!-- 图片轮播 -->
+  <swiper
+    class="image-swiper"
+    indicator-dots
+    autoplay
+    circular
+    wx:if="{{issue.images && issue.images.length > 0}}"
+  >
+    <swiper-item
+      wx:for="{{issue.images}}"
+      wx:key="*this"
+    >
+      <image
+        src="{{item}}"
+        mode="aspectFill"
+        class="swiper-image"
+        bindtap="onPreviewImage"
+        data-url="{{item}}"
+      />
+    </swiper-item>
+  </swiper>
+
+  <!-- 问题内容 -->
+  <view class="issue-content">
+    <!-- 标题和状态 -->
+    <view class="content-header">
+      <text class="issue-title">{{issue.title}}</text>
+      <text class="status-tag status-{{issue.status}}">
+        {{issue.status === 'pending' ? '待处理' : issue.status === 'processing' ? '处理中' : '已整改'}}
+      </text>
+    </view>
+
+    <!-- 发布信息 -->
+    <view class="meta-info">
+      <text class="meta-time">{{formatTime(issue.createTime)}}</text>
+      <text class="meta-location" wx:if="{{issue.location}}">{{issue.location}}</text>
+    </view>
+
+    <!-- 描述 -->
+    <view class="issue-desc">
+      <text>{{issue.description}}</text>
+    </view>
+
+    <!-- 整改信息（已整改时显示） -->
+    <view class="resolve-info" wx:if="{{issue.status === 'resolved' && issue.statusDesc}}">
+      <view class="resolve-header">
+        <text class="resolve-title">整改说明</text>
+      </view>
+      <text class="resolve-desc">{{issue.statusDesc}}</text>
+      <view class="resolve-images" wx:if="{{issue.statusImages && issue.statusImages.length > 0}}">
+        <image
+          wx:for="{{issue.statusImages}}"
+          wx:key="*this"
+          src="{{item}}"
+          mode="aspectFill"
+          class="resolve-image"
+          bindtap="onPreviewImage"
+          data-url="{{item}}"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 点赞和评论 -->
+  <view class="interaction-bar">
+    <view class="interaction-item" bindtap="onLikeTap">
+      <image
+        src="{{isLiked ? '/assets/images/like-active.png' : '/assets/images/like.png'}}"
+        class="interaction-icon"
+      />
+      <text class="interaction-text">{{issue.likeCount || 0}}</text>
+    </view>
+    <view class="interaction-item">
+      <image src="/assets/images/comment.png" class="interaction-icon" />
+      <text class="interaction-text">{{issue.commentCount || 0}}</text>
+    </view>
+
+    <!-- 管理员按钮 -->
+    <view class="admin-btn" wx:if="{{isAdmin}}" bindtap="onShowAdminPanel">
+      <image src="/assets/images/admin.png" class="interaction-icon" />
+      <text class="interaction-text">管理</text>
+    </view>
+  </view>
+
+  <!-- 评论区 -->
+  <view class="comments-section">
+    <view class="section-title">
+      <text>评论</text>
+      <text class="comment-count">{{comments.length}}</text>
+    </view>
+
+    <view class="comment-list" wx:if="{{comments.length > 0}}">
+      <comment-item
+        wx:for="{{comments}}"
+        wx:key="_id"
+        comment="{{item}}"
+      />
+    </view>
+    <view class="no-comments" wx:else>
+      <text>暂无评论，快来抢沙发</text>
+    </view>
+  </view>
+
+  <!-- 底部评论输入 -->
+  <view class="comment-input-bar">
+    <input
+      class="comment-input"
+      placeholder="写下你的评论..."
+      value="{{commentContent}}"
+      maxlength="100"
+      bindinput="onCommentInput"
+    />
+    <button class="submit-btn" bindtap="onSubmitComment">发送</button>
+  </view>
+
+  <!-- 管理员状态更新面板 -->
+  <view class="admin-panel-mask" wx:if="{{showAdminPanel}}" bindtap="onHideAdminPanel"></view>
+  <view class="admin-panel" wx:if="{{showAdminPanel}}">
+    <view class="panel-header">
+      <text>标记处理状态</text>
+      <image src="/assets/images/close.png" class="close-btn" bindtap="onHideAdminPanel" />
+    </view>
+
+    <view class="panel-content">
+      <!-- 状态选项 -->
+      <view class="status-options">
+        <view
+          class="status-option {{newStatus === 'pending' ? 'active' : ''}}"
+          bindtap="onStatusChange"
+          data-status="pending"
+        >
+          <text>待处理</text>
+        </view>
+        <view
+          class="status-option {{newStatus === 'processing' ? 'active' : ''}}"
+          bindtap="onStatusChange"
+          data-status="processing"
+        >
+          <text>处理中</text>
+        </view>
+        <view
+          class="status-option {{newStatus === 'resolved' ? 'active' : ''}}"
+          bindtap="onStatusChange"
+          data-status="resolved"
+        >
+          <text>已整改</text>
+        </view>
+      </view>
+
+      <!-- 整改说明 -->
+      <textarea
+        class="status-desc-input"
+        placeholder="添加整改说明（选填）"
+        value="{{statusDesc}}"
+        bindinput="onStatusDescInput"
+        maxlength="200"
+      />
+
+      <!-- 整改照片 -->
+      <view class="status-images">
+        <view
+          class="status-image-item"
+          wx:for="{{statusImages}}"
+          wx:key="*this"
+        >
+          <image src="{{item}}" mode="aspectFill" />
+          <view
+            class="delete-btn"
+            bindtap="onDeleteStatusImage"
+            data-index="{{index}}"
+          >
+            <image src="/assets/images/delete.png" />
+          </view>
+        </view>
+        <view
+          class="add-status-image"
+          wx:if="{{statusImages.length < maxStatusImages}}"
+          bindtap="onChooseStatusImage"
+        >
+          <image src="/assets/images/camera.png" />
+          <text>添加照片</text>
+        </view>
+      </view>
+
+      <button class="update-btn" bindtap="onUpdateStatus">确认更新</button>
+    </view>
+  </view>
+</view>

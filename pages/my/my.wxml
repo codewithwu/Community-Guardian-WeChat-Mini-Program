@@ -1,0 +1,53 @@
+<!-- pages/my/my.wxml -->
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-section">
+    <view class="user-info" wx:if="{{isLogin}}">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+      <view class="user-detail">
+        <text class="nickname">{{userInfo.nickName}}</text>
+        <text class="admin-tag" wx:if="{{isAdmin}}">管理员</text>
+      </view>
+    </view>
+    <view class="user-info login-tip" wx:else>
+      <image class="avatar" src="/assets/images/default-avatar.png" mode="aspectFill" />
+      <view class="user-detail">
+        <text class="nickname">未登录</text>
+        <text class="login-desc">登录后可发布问题和评论</text>
+      </view>
+      <button class="login-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">登录</button>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-section" wx:if="{{isLogin}}">
+    <view class="stat-item">
+      <text class="stat-num">{{stats.issueCount}}</text>
+      <text class="stat-label">发布问题</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.commentCount}}</text>
+      <text class="stat-label">评论数</text>
+    </view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="onMyIssuesTap">
+      <image src="/assets/images/my-issues.png" class="menu-icon" />
+      <text class="menu-text">我的发布</text>
+      <image src="/assets/images/arrow-right.png" class="arrow-icon" />
+    </view>
+    <view class="menu-item" bindtap="onAboutTap">
+      <image src="/assets/images/about.png" class="menu-icon" />
+      <text class="menu-text">关于我们</text>
+      <image src="/assets/images/arrow-right.png" class="arrow-icon" />
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section" wx:if="{{isLogin}}">
+    <button class="logout-btn" bindtap="onLogout">退出登录</button>
+  </view>
+</view>

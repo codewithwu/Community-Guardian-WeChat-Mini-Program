@@ -1,0 +1,49 @@
+<!-- components/issue-card/issue-card.wxml -->
+<view class="issue-card" bindtap="onTap">
+  <!-- 标题和状态 -->
+  <view class="card-header">
+    <text class="card-title">{{issue.title}}</text>
+    <text class="status-tag status-{{issue.status}}" wx:if="{{showStatus && issue.status}}">
+      {{statusText[issue.status]}}
+    </text>
+  </view>
+
+  <!-- 描述 -->
+  <view class="card-content">
+    <text class="content-text">{{issue.description}}</text>
+  </view>
+
+  <!-- 图片 -->
+  <view class="card-image" wx:if="{{issue.images && issue.images.length > 0}}">
+    <image
+      src="{{issue.images[0]}}"
+      mode="aspectFill"
+      class="thumb-image"
+      lazy-load
+    />
+    <view class="image-count" wx:if="{{issue.images.length > 1}}">
+      {{issue.images.length}}张
+    </view>
+  </view>
+
+  <!-- 位置信息 -->
+  <view class="card-location" wx:if="{{issue.location}}">
+    <image src="/assets/images/location.png" class="location-icon" />
+    <text class="location-text">{{issue.location}}</text>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="card-footer">
+    <text class="footer-time">{{formatTime(issue.createTime)}}</text>
+    <view class="footer-actions">
+      <view class="action-item" catchtap="onLikeTap">
+        <image src="{{issue.isLiked ? '/assets/images/like-active.png' : '/assets/images/like.png'}}" class="action-icon" />
+        <text class="action-text">{{issue.likeCount || 0}}</text>
+      </view>
+      <view class="action-item" catchtap="onCommentTap">
+        <image src="/assets/images/comment.png" class="action-icon" />
+        <text class="action-text">{{issue.commentCount || 0}}</text>
+      </view>
+    </view>
+  </view>
+</view>

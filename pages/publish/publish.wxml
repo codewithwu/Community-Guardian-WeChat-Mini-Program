@@ -1,0 +1,99 @@
+<!-- pages/publish/publish.wxml -->
+<view class="container">
+  <!-- 标题 -->
+  <view class="form-item">
+    <view class="form-label">
+      <text class="required">*</text>
+      <text>问题标题</text>
+    </view>
+    <input
+      class="form-input"
+      placeholder="请输入问题标题（最多30字）"
+      value="{{title}}"
+      maxlength="{{maxTitleLength}}"
+      bindinput="onTitleInput"
+    />
+    <view class="char-count">{{title.length}}/{{maxTitleLength}}</view>
+  </view>
+
+  <!-- 描述 -->
+  <view class="form-item">
+    <view class="form-label">
+      <text class="required">*</text>
+      <text>问题描述</text>
+    </view>
+    <textarea
+      class="form-textarea"
+      placeholder="请详细描述问题（最多200字）"
+      value="{{description}}"
+      maxlength="{{maxDescLength}}"
+      bindinput="onDescInput"
+    />
+    <view class="char-count">{{description.length}}/{{maxDescLength}}</view>
+  </view>
+
+  <!-- 位置 -->
+  <view class="form-item">
+    <view class="form-label">
+      <text class="optional">选填</text>
+      <text>位置信息</text>
+    </view>
+    <input
+      class="form-input"
+      placeholder="如：1号楼2单元门口"
+      value="{{location}}"
+      maxlength="{{maxLocationLength}}"
+      bindinput="onLocationInput"
+    />
+  </view>
+
+  <!-- 图片 -->
+  <view class="form-item">
+    <view class="form-label">
+      <text class="required">*</text>
+      <text>问题照片</text>
+      <text class="label-hint">（最多{{maxImages}}张）</text>
+    </view>
+    <view class="image-list">
+      <view
+        class="image-item"
+        wx:for="{{images}}"
+        wx:key="*this"
+      >
+        <image
+          src="{{item}}"
+          mode="aspectFill"
+          class="preview-image"
+          bindtap="onPreviewImage"
+          data-index="{{index}}"
+        />
+        <view
+          class="delete-btn"
+          bindtap="onDeleteImage"
+          data-index="{{index}}"
+        >
+          <image src="/assets/images/delete.png" />
+        </view>
+      </view>
+      <view
+        class="add-image"
+        wx:if="{{images.length < maxImages}}"
+        bindtap="onChooseImage"
+      >
+        <image src="/assets/images/camera.png" class="camera-icon" />
+        <text class="add-text">添加照片</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 发布按钮 -->
+  <view class="form-action">
+    <button
+      class="btn-primary"
+      bindtap="onPublish"
+      disabled="{{publishing}}"
+    >
+      {{publishing ? '发布中...' : '发布问题'}}
+    </button>
+  </view>
+</view>

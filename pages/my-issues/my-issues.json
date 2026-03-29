@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "issue-card": "/components/issue-card/issue-card",
+    "empty-state": "/components/empty-state/empty-state"
+  },
+  "navigationBarTitleText": "我的发布",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

@@ -1,0 +1,44 @@
+<!-- pages/my-issues/my-issues.wxml -->
+<view class="container">
+  <scroll-view
+    scroll-y
+    class="issue-list"
+    enable-back-to-top
+    bindscrolltolower="onReachBottom"
+  >
+    <block wx:if="{{issues.length > 0}}">
+      <view
+        wx:for="{{issues}}"
+        wx:key="_id"
+        class="issue-item"
+      >
+        <issue-card
+          issue="{{item}}"
+          bindtap="onIssueTap"
+          data-id="{{item._id}}"
+        />
+        <view class="issue-actions">
+          <view
+            class="action-btn delete-btn"
+            bindtap="onDeleteIssue"
+            data-id="{{item._id}}"
+          >
+            <image src="/assets/images/delete.png" />
+            <text>删除</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <empty-state type="no-issues" text="您还没有发布任何问题" />
+    </block>
+
+    <!-- 加载更多 -->
+    <view class="loading-more" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+    <view class="loading-more" wx:elif="{{!hasMore && issues.length > 0}}">
+      <text>没有更多了</text>
+    </view>
+  </scroll-view>
+</view>

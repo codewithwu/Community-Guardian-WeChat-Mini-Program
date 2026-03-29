@@ -1,0 +1,39 @@
+/* pages/index/index.wxss */
+
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  position: relative;
+}
+
+.issue-list {
+  height: 100vh;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.publish-btn {
+  position: fixed;
+  right: 32rpx;
+  bottom: 120rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background-color: #07C160;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 20rpx rgba(7, 193, 96, 0.4);
+}
+
+.publish-icon {
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.loading-more {
+  text-align: center;
+  padding: 30rpx;
+  color: #999999;
+  font-size: 26rpx;
+}
